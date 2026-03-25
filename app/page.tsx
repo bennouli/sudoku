@@ -1,9 +1,9 @@
 import { SudokuPreview } from "@/components/SudokuPreview";
-import { fetchSudokus } from "@/server/sudokus";
+import { getSudokus } from "@/server/sudokus";
 import Link from "next/link";
 
 export default async function Home() {
-  const sudokus = await fetchSudokus({});
+  const sudokus = await getSudokus({});
 
   return (
     <div className="flex min-h-screen items-center justify-center bg-zinc-50 font-sans dark:bg-black">

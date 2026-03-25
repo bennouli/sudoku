@@ -1,7 +1,7 @@
 "use server";
 
 import { SudokuGameClient } from "@/components/SudokuGameClient";
-import { fetchSudoku } from "@/server/sudokus";
+import { getSudoku } from "@/server/sudokus";
 import { redirect } from "next/navigation";
 
 export default async function Game({
@@ -11,7 +11,7 @@ export default async function Game({
 }) {
   const { id } = await params;
 
-  const sudoku = await fetchSudoku(id);
+  const sudoku = await getSudoku(id);
 
   if (!sudoku) {
     redirect("/404");

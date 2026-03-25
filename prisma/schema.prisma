@@ -12,6 +12,8 @@ model Game {
   state      Json
   player     User      @relation(fields: [playerId], references: [id])
   playerId   String    @db.Uuid
+  sudoku     Sudoku    @relation(fields: [sudokuId], references: [id])
+  sudokuId   String    @db.Uuid
   updated_at DateTime? @db.Timestamp(6)
   created_at DateTime  @default(now()) @db.Timestamp(6)
   deleted_at DateTime? @db.Timestamp(6)
@@ -26,6 +28,7 @@ model Sudoku {
   created_at DateTime  @default(now()) @db.Timestamp(6)
   deleted_at DateTime? @db.Timestamp(6)
   puzzle     Json
+  Game       Game[]
 
   @@map("sudokus")
 }

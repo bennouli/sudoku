@@ -12,8 +12,13 @@ export type SudokuGameClientProps = {
 
 export function SudokuGameClient({ sudoku }: SudokuGameClientProps) {
   const {
+    gameStateHistory,
     gameState,
     boardValidityState,
+    undoable,
+    redoable,
+    undo,
+    redo,
     updateCellValue,
     handleKeyDown,
     activeCell,
@@ -24,15 +29,34 @@ export function SudokuGameClient({ sudoku }: SudokuGameClientProps) {
   // }, []);
 
   return (
-    <SudokuContainer onKeyDown={handleKeyDown} className="min-w-sm">
-      <SudokuGrid
-        puzzle={sudoku.puzzle as Puzzle}
-        grid={gameState}
-        boardValidityState={boardValidityState}
-        activeCell={activeCell}
-        cellUpdateAction={updateCellValue}
-      />
-    </SudokuContainer>
+    <>
+      <SudokuContainer onKeyDown={handleKeyDown} className="min-w-sm">
+        <SudokuGrid
+          puzzle={sudoku.puzzle as Puzzle}
+          grid={gameState}
+          boardValidityState={boardValidityState}
+          activeCell={activeCell}
+          cellUpdateAction={updateCellValue}
+        />
+      </SudokuContainer>
+      <div className="flex gap-2 ">
+        <button
+          onClick={undo}
+          disabled={!undoable}
+          className="disabled:bg-red-700"
+        >
+          Undo
+        </button>
+        <button
+          onClick={redo}
+          disabled={!redoable}
+          className="disabled:bg-red-700"
+        >
+          Redo
+        </button>
+        {JSON.stringify(gameStateHistory)}
+      </div>
+    </>
   );
 }
 
