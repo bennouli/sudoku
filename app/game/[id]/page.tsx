@@ -1,5 +1,3 @@
-"use server";
-
 import { SudokuGameClient } from "@/components/SudokuGameClient";
 import { getSudoku } from "@/server/sudokus";
 import { redirect } from "next/navigation";
