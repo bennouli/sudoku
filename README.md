@@ -1,36 +1,99 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Sudoku
 
-## Getting Started
+A sudoku app built with Next.js, Prisma, and PostgreSQL.
 
-First, run the development server:
+## Stack
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+| Layer | Technology |
+|---|---|
+| Framework | Next.js 16 (App Router) |
+| Language | TypeScript |
+| Styling | Tailwind CSS v4, CVA |
+| State | Jotai |
+| ORM | Prisma 7 (`@prisma/adapter-pg`) |
+| Database | PostgreSQL (Docker) |
+
+## Project structure
+
+```
+app/
+  page.tsx              # Home — grid of all puzzles
+  game/[id]/page.tsx    # Play a specific puzzle
+  api/sync/route.ts     # Game state sync endpoint (WIP)
+components/             # React UI components
+hooks/
+  useGame.tsx           # Cell editing, undo/redo, keyboard nav, validation
+server/                 # Server actions (sudokus, games, users)
+shared/
+  types.d.ts            # Puzzle / Coordinates / BoardValidityState types
+  validate.ts           # Row / col / box conflict detection
+  atoms.ts              # Jotai atoms
+lib/
+  db.ts                 # Prisma client singleton
+prisma/
+  schema.prisma         # Data model
+  migrations/           # SQL migration history
+  seed.ts               # 3 seed puzzles (easy / medium / hard)
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+## Data model
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+**Sudoku** — a puzzle definition  
+- `puzzle`: `(number | null)[][]` — 9×9 grid, `null` for blank cells  
+- `solution`: `number[][]` — complete 9×9 grid
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+**Game** — a player's in-progress session  
+- `state`: current board state (starts as a copy of `puzzle`)  
+- belongs to a `User` and a `Sudoku`
 
-## Learn More
+**User** — a player; has many `Game`s
 
-To learn more about Next.js, take a look at the following resources:
+## Dev setup
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+**Prerequisites:** Docker, Node.js
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+```sh
+# 1. Start the database
+docker compose up -d
 
-## Deploy on Vercel
+# 2. Install dependencies
+npm install
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+# 3. Apply migrations
+npx prisma migrate dev
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+# 4. Seed 3 puzzles (easy / medium / hard)
+npm run db:seed
+
+# 5. Start the app
+npm run dev
+```
+
+The `.env` file ships with credentials that match `docker-compose.yml`, so no edits are needed for local development.
+
+| Service | URL |
+|---|---|
+| App | http://localhost:3000 |
+| Adminer (DB UI) | http://localhost:8080 |
+| PostgreSQL | localhost:5433 |
+
+## Available scripts
+
+| Command | Description |
+|---|---|
+| `npm run dev` | Start Next.js dev server |
+| `npm run build` | Production build |
+| `npm run db:seed` | Seed the database with 3 puzzles |
+| `npm run prisma:migrate` | Run Prisma migrations |
+| `npm run prisma:dbpush` | Push schema changes without a migration |
+| `npm run lint` | Run ESLint |
+
+## Regenerating the Prisma client
+
+After editing `prisma/schema.prisma`, regenerate the client:
+
+```sh
+npx prisma generate
+```
+
+The generated client lives in `generated/prisma/` (not `node_modules`).
