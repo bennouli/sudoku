@@ -2,9 +2,9 @@
 import { Puzzle } from "@/shared/types";
 import { SudokuContainer } from "./SudokuContainer";
 import { SudokuGrid } from "./SudokuGrid";
-import { sudokus } from "@/generated/prisma/client";
+import type { Sudoku } from "@/generated/prisma/client";
 
-export function SudokuPreview({ sudoku }: { sudoku: sudokus }) {
+export function SudokuPreview({ sudoku }: { sudoku: Sudoku }) {
   return (
     <SudokuContainer className="pointer-events-none">
       <SudokuGrid

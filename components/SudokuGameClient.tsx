@@ -4,7 +4,7 @@ import { useGame } from "@/hooks/useGame";
 import { SudokuGrid } from "./SudokuGrid";
 import { SudokuContainer } from "./SudokuContainer";
 import { Puzzle } from "@/shared/types";
-import { Sudoku } from "@/generated/prisma/client";
+import type { Sudoku } from "@/generated/prisma/client";
 
 export type SudokuGameClientProps = {
   sudoku: Sudoku;

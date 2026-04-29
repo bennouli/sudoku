@@ -1,4 +1,4 @@
-import { Sudoku } from "@/generated/prisma/client";
+import type { Sudoku } from "@/generated/prisma/client";
 import { activeCellAtom } from "@/shared/atoms";
 import { Puzzle, Coordinates, BoardValidityState } from "@/shared/types";
 import { getBoardValidityState } from "@/shared/validate";
