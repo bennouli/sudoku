@@ -11,7 +11,7 @@ export function SudokuContainer({
             {...props}
             className={cn(
                 className,
-                "grid grid-cols-9 grid-rows-9 aspect-square w-full items gap-px p-px border border-white bg-slate-500 @container",
+                "grid grid-cols-9 grid-rows-9 aspect-square w-full items gap-px p-px border border-zinc-400 bg-zinc-700 @container",
             )}
         >
             {children}

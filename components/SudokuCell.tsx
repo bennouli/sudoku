@@ -89,8 +89,8 @@ export function SudokuCell({
                 onKeyDown={handleChange}
                 tabIndex={1}
                 className={cn(
-                    "outline-none select-none focus:bg-cyan-600 self-center text-center @xs:text-base @sm:text-xl @md:text-2xl @lg:text-3xl @xl:text-4xl @2xl:text-5xl @4xl:text-6xl justify-center aspect-square size-full items-center flex bg-white/30",
-                    isStatic && "bg-slate-900",
+                    "outline-none select-none focus:bg-cyan-600 self-center text-center @xs:text-base @sm:text-xl @md:text-2xl @lg:text-3xl @xl:text-4xl @2xl:text-5xl @4xl:text-6xl justify-center aspect-square size-full items-center flex bg-zinc-950",
+                    isStatic && "bg-zinc-800",
                 )}
             >
                 {value || ""}
@@ -106,20 +106,20 @@ export function SudokuCell({
 }
 
 const variants = cva(
-    ["size-full text-white relative grid content-stretch border bg-black"],
+    ["size-full text-zinc-200 relative grid content-stretch border bg-black"],
     {
         variants: {
             intent: {
-                editable: "border-white/30",
-                static: "border-white/10",
+                editable: "border-zinc-800",
+                static: "border-zinc-800",
             },
             preview: { true: "pointer-events-none" },
             highlighted: {
                 true: "bg-emerald-900",
             },
             valid: { false: "bg-red-500" },
-            boxEdgeRight: { true: "border-r-white" },
-            boxEdgeBottom: { true: "border-b-white" },
+            boxEdgeRight: { true: "border-r-zinc-400" },
+            boxEdgeBottom: { true: "border-b-zinc-400" },
         },
         compoundVariants: [
             { highlighted: true, valid: false, class: "bg-emerald-900" },

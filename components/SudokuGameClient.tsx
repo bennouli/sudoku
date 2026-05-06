@@ -44,16 +44,16 @@ export function SudokuGameClient({ sudoku }: SudokuGameClientProps) {
                 <button
                     onClick={undo}
                     disabled={!undoable}
-                    className="disabled:opacity-30 not-disabled:cursor-pointer bg-gray-400 rounded-md p-1"
+                    className="disabled:opacity-30 not-disabled:cursor-pointer bg-zinc-400 rounded-md p-1"
                 >
-                    <Undo strokeWidth={3} size={32} className="text-gray-700" />
+                    <Undo strokeWidth={3} size={32} className="text-zinc-700" />
                 </button>
                 <button
                     onClick={redo}
                     disabled={!redoable}
-                    className="disabled:opacity-30 not-disabled:cursor-pointer bg-gray-400 rounded-md p-1"
+                    className="disabled:opacity-30 not-disabled:cursor-pointer bg-zinc-400 rounded-md p-1"
                 >
-                    <Redo strokeWidth={3} size={32} className="text-gray-700" />
+                    <Redo strokeWidth={3} size={32} className="text-zinc-700" />
                 </button>
             </div>
             {process.env.NODE_ENV === "development" && (
